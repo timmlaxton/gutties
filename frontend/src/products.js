@@ -3,13 +3,13 @@ const products = [
     _id: '1',
     name: 'Converse',
     image: '/images/con.jpg',
-    decription: 
+    description: 
     'Navy all star hi trainers',
     brand: 'Converse',
     catergory: 'Trainers',
     size: 8,
     price: 59.99,
-    countInStock: 10,
+    countInStock: 0,
     rating: 4.8,
     numReviews: 22,
   },
@@ -17,7 +17,7 @@ const products = [
     _id: '2',
     name: 'Nike',
     image: '/images/Nikemd.jpg',
-    decription: 
+    description: 
     'Bold and bright kicks',
     brand: 'Nike',
     catergory: 'Trainers',
@@ -31,7 +31,7 @@ const products = [
     _id: '3',
     name: 'Addidas',
     image: '/images/Addidas.jpg',
-    decription: 
+    description: 
     'The mighty adidas Gazelle',
     brand: 'Addidas',
     catergory: 'Trainers',
@@ -45,7 +45,7 @@ const products = [
     _id: '4',
     name: 'New Balance',
     image: '/images/nb.jpg',
-    decription: 
+    description: 
     'The 720 trainer boasts a dark green suede upper with mesh inserts to keep it real cool.',
     brand: 'New Balance',
     catergory: 'Trainers',
@@ -59,7 +59,7 @@ const products = [
     _id: '5',
     name: 'Vans',
     image: '/images/vans.jpg',
-    decription: 
+    description: 
     'Vans have got laidback style down to a T!',
     brand: 'Vans',
     catergory: 'Trainers',
@@ -73,7 +73,7 @@ const products = [
     _id: '6',
     name: 'Nike SB',
     image: '/images/nikeSB.jpg',
-    decription: 
+    description: 
     'Add to your collection with the latest Nike SB Team Classic.',
     brand: 'NikeSB',
     catergory: 'Trainers',
@@ -87,7 +87,7 @@ const products = [
     _id: '7',
     name: 'Converse',
     image: '/images/Conversehi.jpg',
-    decription: 
+    description: 
     'The All Star Hi is a true American classic which has not changed since the ambassador of the game wore them himself.',
     brand: 'Converse',
     catergory: 'Trainers',
@@ -101,7 +101,7 @@ const products = [
     _id: '8',
     name: 'Addidas',
     image: '/images/addidaslow.jpg',
-    decription: 
+    description: 
     'Adidas continues to serve up the retro styles this season with the Americana Low this season.',
     brand: 'Addidas',
     catergory: 'Trainers',
@@ -115,7 +115,7 @@ const products = [
     _id: '9',
     name: 'Vans',
     image: '/images/vanslip.jpg',
-    decription: 
+    description: 
     'Bring some life to your new season sneaker rotation and bag something with a subtle hint of colour.',
     brand: 'Vans',
     catergory: 'Trainers',
@@ -129,7 +129,7 @@ const products = [
     _id: '10',
     name: 'New Balance',
     image: '/images/newbalance720.jpg',
-    decription: 
+    description: 
     'The New Balance 720 combines sporty features and laidback flair in a navy suede upper with plenty of colour pops to get you noticed.',
     brand: 'New Balance',
     catergory: 'Trainers',
