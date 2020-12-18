@@ -4,9 +4,11 @@ import Product from '../components/Product'
 import products from '../products'
 
 
+
 const HomeScreen = () => {
   return (
     <>
+    
       <h1>Trainers</h1>
       <Row>
         {products.map(product => (

@@ -1,5 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+
 main {
   min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
 }
 
 .card {
@@ -15,3 +26,12 @@ main {
   position: left;
   
 }
+
+.fa-shopping-cart:before{
+  padding: .5rem;
+}
+
+.fa-user:before{
+  padding-right: 4%;
+}
+
