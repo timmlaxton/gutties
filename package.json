@@ -1,0 +1,22 @@
+{
+  "name": "gutties",
+  "version": "1.0.0",
+  "description": "Guttie store",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timmlaxton/gutties.git"
+  },
+  "author": "Tim Laxton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timmlaxton/gutties/issues"
+  },
+  "homepage": "https://github.com/timmlaxton/gutties#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
