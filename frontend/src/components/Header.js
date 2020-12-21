@@ -40,7 +40,7 @@ const Header = () => {
     
     <Form inline className="auto">
       <FormControl className="searchbar" type="text" placeholder="Search" aria-label="Search"/>
-      <Button calssName="searchbutton" variant="outline-grey">Search</Button>
+      <Button className="searchbutton" variant="outline-grey">Search</Button>
     </Form>
     <Nav className="ml-auto" >
     <LinkContainer to='/cart'>
