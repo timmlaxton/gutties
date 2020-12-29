@@ -9,7 +9,7 @@ const products = [
     category: 'Trainers',
     size: 8,
     price: 59.99,
-    countInStock: 0,
+    countInStock: 8,
     rating: 4.8,
     numReviews: 22,
   },
