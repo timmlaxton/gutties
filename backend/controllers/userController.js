@@ -25,4 +25,12 @@ if(user && (await user.matchPassword(password))) {
 }
 })
 
-export {authUser}
+// Get user profile
+// GET /api/users/profile
+// private
+const getUserProfile = asyncHandler(async (req, res) => {
+res.send('Success')
+ })
+ 
+
+export {authUser, getUserProfile}
