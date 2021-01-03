@@ -29,11 +29,11 @@ const products = [
   },
   {
     
-    name: 'Addidas',
-    image: '/images/Addidas.jpg',
+    name: 'Adidas',
+    image: '/images/Adidas.jpg',
     description: 
     'The mighty adidas Gazelle',
-    brand: 'Addidas',
+    brand: 'Adidas',
     category: 'Trainers',
     size: 6,
     price: 49.99,
@@ -99,11 +99,11 @@ const products = [
   },
   {
     
-    name: 'Addidas',
-    image: '/images/addidaslow.jpg',
+    name: 'Adidas',
+    image: '/images/Adidaslow.jpg',
     description: 
     'Adidas continues to serve up the retro styles this season with the Americana Low this season.',
-    brand: 'Addidas',
+    brand: 'Adidas',
     category: 'Trainers',
     size: 8,
     price: 34.99,
