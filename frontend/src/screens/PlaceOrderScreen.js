@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
@@ -6,7 +6,18 @@ import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 
 const PlaceOrderScreen = () => {
+  const dispatch = useDispatch()
   const cart = useSelector(state => state.cart)
+  
+  const addDecimals = (num) => {
+    return (Math.round(num *100) / 100).toFixed(2)
+}
+
+  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+
+  cart.shippingPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)))
+
+  cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2)
 
 
   return (
@@ -30,7 +41,8 @@ const PlaceOrderScreen = () => {
                   <ListGroup.Item>
                     <h2>Payment Method</h2>
                     <strong>Method: </strong>
-                    {cart.paymentMethod}
+                    {cart.paymentMethod} <i class="fab fa-paypal"></i>
+
                   </ListGroup.Item>
 
                   <ListGroup.Item>
@@ -80,7 +92,7 @@ const PlaceOrderScreen = () => {
               </ListGroup.Item>
               <ListGroup.Item> 
               <Row>
-                <Col>Shipping</Col>
+                <Col>Postage & Packing</Col>
                 <Col>£{cart.shippingPrice}</Col>
               </Row>
               </ListGroup.Item>
