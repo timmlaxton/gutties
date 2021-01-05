@@ -111,14 +111,16 @@ if(password !== confirmPassword) {
     <h2>My Orders</h2>    
     {loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>
     {errorOrders}</Message> : (
-      <Table striped bordered hover responsive className='table-sm'> 
+      <Table bordered hover responsive className='table-sm'> 
         <thead>
+          <br/>
+          
           <tr>
-            <th>ID</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-            <th>PAID</th>
-            <th>DELIVERED</th>
+            <th>order number</th>
+            <th>date</th>
+            <th>total</th>
+            <th>paid</th>
+            <th>delivered</th>
             <th></th>
           </tr>
         </thead>
