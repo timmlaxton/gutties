@@ -1,15 +1,20 @@
 import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap';
+import {Button, Row, Col, ListGroup, Image, Card, Form} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import {createOrder} from '../actions/orderActions'
+import {addToCart, removeFromCart} from '../actions/cartActions'
 
 
-const PlaceOrderScreen = ({history}) => {
+
+const PlaceOrderScreen = ({history, match, location}) => {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart)
+  const productId = match.params.id
+ 
+
   
   const addDecimals = (num) => {
     return (Math.round(num *100) / 100).toFixed(2)
@@ -21,17 +26,25 @@ const PlaceOrderScreen = ({history}) => {
 
   cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2)
 
+ 
 
   const orderCreate = useSelector(state => state.orderCreate)
   const { order, success, error, message: errorMessage} = orderCreate
 
   useEffect(() => {
+    if(productId) {
+      dispatch(addToCart(productId))
+    } 
     if(success) {
-      
       history.push(`/order/${order._id}`)
     }
     // eslint-disable-next-line
-  }, [history, success])
+  }, [history, success, dispatch, productId])
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id))
+  }
+  
 
   const placeOrderHandler = () => {
     dispatch(createOrder({
@@ -72,7 +85,7 @@ const PlaceOrderScreen = ({history}) => {
                   <ListGroup.Item>
               <h2>Order Items</h2>
               {cart.cartItems.length === 0 ? (
-                <Message>Your cart is empty</Message>
+                <Message>Your cart is empty <Link to="/">return to homepage</Link></Message>
               ) : (
                 <ListGroup variant='flush'>
                   {cart.cartItems.map((item, index) => (
@@ -91,11 +104,37 @@ const PlaceOrderScreen = ({history}) => {
                             {item.name}
                           </Link>
                         </Col>
+                        <Col>Qty</Col>
+                    <Col>
+                    <Form.Control
+                  as='select'
+                  value={item.qty}
+                  onChange={(e) =>
+                    dispatch(
+                      addToCart(item.product, Number(e.target.value))
+                    )
+                  }
+                >
+                  {[...Array(item.countInStock).keys()].map((x) => (
+                    <option key={x + 1} value={x + 1}>
+                      {x + 1}
+                    </option>
+                  ))}
+                </Form.Control>
+                    </Col>
                         <Col md={4}>
-                          {item.qty} x £{item.price} = £{item.qty * item.price}
+                          {item.qty} x  = £{item.qty * item.price}
+                          <Button
+                  type='button'
+                  variant='light'
+                  onClick={() => removeFromCartHandler(item.product)}
+                >
+                  <i className='fas fa-trash'></i>
+                </Button>
                         </Col>
                       </Row>
                     </ListGroup.Item>
+                    
                   ))}
                 </ListGroup>
               )}

@@ -36,7 +36,7 @@ const checkoutHandler = () => {
       <br/>
       {cartItems.length === 0 ? 
       <Message>
-        There are currently no items in your bag<Link to="/">Go Back</Link>
+        There are currently no items in your bag <Link to="/">return to homepage</Link>
         </Message> : (
         <ListGroup variant='flush'>
         {cartItems.map((item) => (
