@@ -5,6 +5,9 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
   USER_LOGIN_FAIL, 
   USER_LOGIN_REQUEST, 
   USER_LOGIN_SUCCESS, 
@@ -14,8 +17,8 @@ import {
   USER_REGISTER_SUCCESS, 
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
-  USER_UPDATE_PROFILE_SUCCESS} 
-  from "../constants/userConstants"
+  USER_UPDATE_PROFILE_SUCCESS
+} from "../constants/userConstants"
   import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
 
@@ -143,11 +146,12 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
 
-    const { data } = await axios.put('/api/users//profile', user, config)
+    const { data } = await axios.put('/api/users/profile', user, config)
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -163,6 +167,43 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     }
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const listUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+ 
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get('/api/users', config)
+
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: USER_LIST_FAIL,
       payload: message,
     })
   }
