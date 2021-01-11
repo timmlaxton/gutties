@@ -14,15 +14,15 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+    
   },
-  
   isAdmin: {
     type: Boolean,
     required: true,
     default: false
-  },
+  }
 }, {
-  timestmp: true
+  timestamps: true
 })
 
 userSchema.methods.matchPassword = async function(enteredPassword) {
@@ -33,7 +33,6 @@ userSchema.pre('save', async function (next) {
   if(!this.isModified('password')) {
     next()
   }
-
 
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
