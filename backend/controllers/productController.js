@@ -59,6 +59,38 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(createdProduct)
 })
 
+// Update product
+// PUT /api/products/:id
+// private admin
+
+const updateProduct = asyncHandler (async (req, res) => {
+  const {name, image, brand, category, size, price, countInStock, description, featured} = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if(product) {
+    product.name = name
+    product.image = image
+    product.brand = brand
+    product.category = category
+    product.size = size
+    product.price = price
+    product.countInStock = countInStock
+    product.description = description
+    product.featured = featured
+
+    if (image) {
+      product.image = image
+    }
+
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  } else {
+    res.status(404)
+    throw new Errro('Product not found')
+  }
+})
+
 export {
-  getProducts, getProductById, deleteProduct, createProduct
+  getProducts, getProductById, deleteProduct, createProduct, updateProduct
 }

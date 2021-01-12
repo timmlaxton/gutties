@@ -32,13 +32,17 @@ const productSchema = mongoose.Schema(
     required: true, 
   },
   size: {
-    type: Number,
+    type: String,
     required: true, 
   },
   price: {
     type: Number,
     required: true, 
     defualt: 0
+  },
+  colour: {
+    type: String,
+    required: true, 
   },
   countInStock: {
     type: Number,
