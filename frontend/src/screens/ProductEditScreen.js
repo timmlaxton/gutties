@@ -58,13 +58,13 @@ const ProductEditScreen = ({match, history}) => {
     }
   },[dispatch, productId, product, history, successUpdate, isCreateProductMode])
 
-  const onUploadImage = (e) => {
+  const onUploadImage = e => {
     const file = e.target.files[0]
     setImage(file)
-    if (file)  {
+    if (file) {
       const reader = new FileReader()
 
-      reader.onload = (e) => {
+      reader.onload = e => {
         setImagePreview(e.target.result)
       }
 
@@ -99,7 +99,6 @@ const ProductEditScreen = ({match, history}) => {
       throw new Error('There was a problem')
     }
   }
-
     const submitHandler = async (e) => {
       e.preventDefault()
       let finalImage = imageUrl
