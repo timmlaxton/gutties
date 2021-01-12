@@ -138,6 +138,20 @@ const products = [
     countInStock: 10,
     rating: 4.8,
     numReviews: 22,
+  },
+  {
+    
+    name: 'Old Balance',
+    image: '/images/newbalance720.jpg',
+    description: 
+    'The New Balance 720 combines sporty features and laidback flair in a navy suede upper with plenty of colour pops to get you noticed.',
+    brand: 'New Balance',
+    category: 'Trainers',
+    size: 9,
+    price: 52.99,
+    countInStock: 10,
+    rating: 4.8,
+    numReviews: 22,
   }
 ]
 
