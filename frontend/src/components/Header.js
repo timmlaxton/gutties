@@ -1,7 +1,9 @@
 import React from 'react'
+import {Route} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
-import {Navbar, Nav, NavDropdown, Form, Button, FormControl, Container} from 'react-bootstrap';
+import {Nav, NavDropdown, Navbar, Container} from 'react-bootstrap';
+import {SearchBar} from '../components/SearchBar'
 import {logout} from '../actions/userActions'
 
 const Header = () => {
@@ -45,10 +47,7 @@ const Header = () => {
       </Nav>
      
     
-    <Form inline className="auto">
-      <FormControl className="searchbar" type="text" placeholder="Search" aria-label="Search"/>
-      <Button className="searchbutton" variant="outline-grey">Search</Button>
-    </Form>
+    <Route render={({history}) => <SearchBar history={history} />}/>
     <Nav className="ml-auto" >
     <LinkContainer to='/cart'>
       <Nav.Link><i className="fas fa-shopping-cart"></i>
