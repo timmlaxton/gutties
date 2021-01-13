@@ -15,6 +15,10 @@ import {
   ORDER_LIST_SUCCESS,
   ORDER_LIST_REQUEST,
   ORDER_LIST_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
+  
   } from '../constants/orderConstants'
   
   import { logout } from './userActions'
@@ -34,15 +38,14 @@ import {
         },
       }
 
-      const {data} = await axios.post(`/api/orders`, order, config) 
+      const {data} = await axios.post(`/api/orders/order`, order, config) 
 
       dispatch({
         type: ORDER_CREATE_SUCCESS,
         payload: data,
       })
-
+      dispatch(resetCart())
   } catch (error) {
-    console.log('CHECK', error.response, error.message, error)
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload: error?.response?.data?.message || error.message
@@ -70,7 +73,6 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     })
 
 } catch (error) {
-  console.log('CHECK', error.response, error.message, error)
   dispatch({
     type: ORDER_DETAILS_FAIL,
     payload: error?.response?.data?.message || error.message
@@ -171,4 +173,32 @@ export const listOrders = () => async (dispatch, getState) => {
       payload: message,
     })
   }
+}
+
+export const deliverOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_DELIVER_REQUEST})
+
+    const {userLogin: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        
+        Authorization: `Bearer ${userInfo.token}`
+      },
+    }
+
+    const {data} = await axios.put(`/api/orders/${order._Id}/deliver`, {}, config) 
+
+    dispatch({
+      type: ORDER_DELIVER_SUCCESS,
+      payload: data,
+    })
+
+} catch (error) {
+  dispatch({
+    type: ORDER_DELIVER_FAIL,
+    payload: error?.response?.data?.message || error.message
+  })
+ }
 }

@@ -1,15 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import axios from 'axios'
 import {PayPalButton} from 'react-paypal-button-v2'
 import {Link} from 'react-router-dom'
-import {Row, Col, ListGroup, Image, Card,} from 'react-bootstrap';
+import {Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {getOrderDetails, payOrder} from '../actions/orderActions'
-import {ORDER_PAY_RESET} from '../constants/orderConstants'
+import {getOrderDetails, payOrder, deliverOrder} from '../actions/orderActions'
+import {ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
 
-const OrderScreen = ({match}) => {
+  const addDecimals = (num) => {
+  return (Math.round(num * 100) / 100).toFixed(2)
+}
+
+  const OrderScreen = ({match, history}) => {
   const orderId = match.params.id
   const [sdkReady, setSdkReady] = useState(false)
   const dispatch = useDispatch()
@@ -20,16 +24,21 @@ const OrderScreen = ({match}) => {
   const orderPay = useSelector(state => state.orderPay)
   const { loading: loadingPay, success: successPay} = orderPay
 
-if(!loading) {
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2)
-  }
-  
-    order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0))
-  }
- 
+  const orderDeliver = useSelector(state => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver} = orderDeliver
 
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo} = userLogin
+
+  const itemsPrice = React.useMemo(() => {
+    return Array.isArray(order?.orderitems) ? order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0 ) 
+    : 0 }, [order?.orderItems])
+
+    
   useEffect(() => {
+    if(!userInfo) {
+      history.push('/login')
+    }
     const addPayPalScript = async () => {
       const {data: clientId} = await axios.get('/api/config/paypal')
       const script = document.createElement('script')
@@ -42,8 +51,9 @@ if(!loading) {
       document.body.appendChild(script)
     }
 
-    if(!order || successPay ) {
+    if(!order || successPay || successDeliver ) {
       dispatch({type: ORDER_PAY_RESET})
+      dispatch({type: ORDER_DELIVER_RESET})
       dispatch(getOrderDetails(orderId))
     } else if(!order.isPaid) {
       if(!window.paypal) {
@@ -52,17 +62,20 @@ if(!loading) {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, order ])
+  }, [dispatch, orderId, successPay, order, successDeliver ])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
   }
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order))
+  }
   
-  return (
-  loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : <>
-  <h1>Order {order._id}</h1>
-  <Row>
+  return  loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : <>
+          <h1>Order {order._id}</h1>
+            <Row>
               <Col md={8}>
                 <ListGroup variant='flush'>
                   <ListGroup.Item>
@@ -75,11 +88,9 @@ if(!loading) {
                       {order.shippingAddress.postCode},{' '}
                       {order.shippingAddress.country}
                     </Col>
-                    
+                    {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}
+                    </Message> : <Message variant='danger'>This item is still to be shipped</Message>}
                   </ListGroup.Item>
-
-   
-
                   <ListGroup.Item>
                     <h2>Payment Method</h2>
                     <strong>Method: </strong>
@@ -131,7 +142,7 @@ if(!loading) {
               <ListGroup.Item> 
               <Row>
                 <Col>Items</Col>
-                <Col>£{order.itemsPrice}</Col>
+                <Col>£{itemsPrice}</Col>
               </Row>
               </ListGroup.Item>
               <ListGroup.Item> 
@@ -148,11 +159,19 @@ if(!loading) {
               </ListGroup.Item>
               {!order.isPaid && (
                  <ListGroup.Item>
-                   {loadingPay && <Loader />}
+                   {loadingPay && <Loader /> }
                    {!sdkReady ? ( <Loader/> ) : (
                      <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler}
                      />
                    )}
+                 </ListGroup.Item>
+               )}
+               {loadingDeliver && <Loader/>}
+               {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                 <ListGroup.Item>
+                   <Button type='button' className='btn btn-block' onClick={deliverHandler}>
+                     Delivered?
+                   </Button>
                  </ListGroup.Item>
                )}
               </ListGroup>
@@ -160,7 +179,7 @@ if(!loading) {
          </Col>
        </Row>
    </>
-  )
+  
 }
 
 export default OrderScreen
