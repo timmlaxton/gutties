@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
 import {Nav, NavDropdown, Navbar, Container} from 'react-bootstrap';
-import {SearchBar} from '../components/SearchBar'
+import SearchBar from './SearchBar'
 import {logout} from '../actions/userActions'
 
 const Header = () => {
@@ -25,7 +25,8 @@ const Header = () => {
   </LinkContainer>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
-    
+  
+
       <Nav className="mr-auto"> 
       <NavDropdown title="Men's" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">New</NavDropdown.Item>
@@ -46,7 +47,6 @@ const Header = () => {
       </NavDropdown>
       </Nav>
      
-    
     <Route render={({history}) => <SearchBar history={history} />}/>
     <Nav className="ml-auto" >
     <LinkContainer to='/cart'>

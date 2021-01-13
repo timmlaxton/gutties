@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import {Form, Button} from 'react-bootstrap'
 
 export const SearchBar = ({history}) => {
-  const [keyword, setKeyWord] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   const submitHandler = (e) => {
     e.prevenDefault()
     if(keyword.trim()) {
-      history.pus('/search/${keyword')
+      history.push(`/search/${keyword}`)
     } else {
       history.push('/')
     }
@@ -17,14 +17,16 @@ export const SearchBar = ({history}) => {
     <Form onSubmit={submitHandler} inline>
       <Form.Control type="text" 
       name='q' 
-      onChange={(e) => setKeyWord(e.target.value)} 
+      onChange={(e) => setKeyword(e.target.value)} 
       placeholder='Search products'
       className='mr-sm-2 ml-sm-5'
       ></Form.Control>
 
-      <Button type='submit' variant='black' className='p-2'>
+      <Button type='submit' variant='outline-black' className='p-2'>
        Search
       </Button>
     </Form>
   )
 }
+
+export default SearchBar

@@ -57,7 +57,11 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST})
 
-    const {userLogin: {userInfo}} = getState()
+    const state = getState()
+    console.log('state???', state)
+    const {
+      userLogin: { userInfo },
+    } = state
 
     const config = {
       headers: {
@@ -144,9 +148,11 @@ export const listOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_REQUEST,
     })
 
+    const state = getState()
+    console.log('state???', state)
     const {
       userLogin: { userInfo },
-    } = getState()
+    } = state
 
     const config = {
       headers: {
@@ -188,7 +194,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       },
     }
 
-    const {data} = await axios.put(`/api/orders/${order._Id}/deliver`, {}, config) 
+    const {data} = await axios.put(`/api/orders/${order._id}/deliver`, {}, config) 
 
     dispatch({
       type: ORDER_DELIVER_SUCCESS,

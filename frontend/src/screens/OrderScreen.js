@@ -31,8 +31,8 @@ import {ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
   const { userInfo} = userLogin
 
   const itemsPrice = React.useMemo(() => {
-    return Array.isArray(order?.orderitems) ? order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0 ) 
-    : 0 }, [order?.orderItems])
+    return Array.isArray(order?.orderItems) ? order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0) : 0
+  }, [order?.orderItems])
 
     
   useEffect(() => {
@@ -62,7 +62,7 @@ import {ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, order, successDeliver ])
+  }, [dispatch, orderId, successPay, order, successDeliver, history, userInfo ])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
