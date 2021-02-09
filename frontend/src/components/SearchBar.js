@@ -1,32 +1,33 @@
-import React, {useState} from 'react'
-import {Form, Button} from 'react-bootstrap'
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+export const SearchBar = (props) => {
+	const { history } = props;
+	const [keyword, setKeyword] = useState('');
 
-export const SearchBar = ({history}) => {
-  const [keyword, setKeyword] = useState('')
+	const submitHandler = (e) => {
+		e.preventDefault();
+		if (keyword.trim()) {
+			history.push(`/search/${keyword}${history.location.search}`);
+		} else {
+			history.push(`/${history.location.search}`);
+		}
+	};
 
-  const submitHandler = (e) => {
-    e.prevenDefault()
-    if(keyword.trim()) {
-      history.push(`/search/${keyword}`)
-    } else {
-      history.push('/')
-    }
-  }
+	return (
+		<Form onSubmit={submitHandler} inline>
+			<Form.Control
+				type="text"
+				name="q"
+				onChange={(e) => setKeyword(e.target.value)}
+				placeholder="Search gutties"
+				className="mr-sm-2 ml-sm-5"
+			></Form.Control>
 
-  return (
-    <Form onSubmit={submitHandler} inline>
-      <Form.Control type="text" 
-      name='q' 
-      onChange={(e) => setKeyword(e.target.value)} 
-      placeholder='Search products'
-      className='mr-sm-2 ml-sm-5'
-      ></Form.Control>
+			<Button type="submit" variant="outline-black" className="p-2">
+				Search
+			</Button>
+		</Form>
+	);
+};
 
-      <Button type='submit' variant='outline-black' className='p-2'>
-       Search
-      </Button>
-    </Form>
-  )
-}
-
-export default SearchBar
+export default SearchBar;

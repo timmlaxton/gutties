@@ -1,31 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 
-
 main {
-  min-height: 80vh;
+	min-height: 80vh;
 }
 
-
-
 h3 {
-  padding: 1rem 0;
+	padding: 1rem 0;
 }
 
 .rating span {
-  margin: 0.1rem;
+	margin: 0.1rem;
 }
 
 .card {
-  min-height: 200px;
-  border: none;
+	min-height: 200px;
+	border: none;
 }
 
-.card-body{
-  width: 100%;
+.card-body {
+	width: 100%;
 }
 
 .card-title {
-  position: left;
-  
+	position: left;
 }
-
