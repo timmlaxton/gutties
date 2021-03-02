@@ -12,10 +12,9 @@ import { useURLQuery } from '../hooks';
 const HomeScreen = ({ match }) => {
 	const keyword = match.params.keyword || '';
 	const query = useURLQuery();
-	console.log('QUERY', query);
 	const size = query.get('size');
 	const colour = query.get('colour');
-	console.log({ size, colour });
+	const brand = query.get('brand');
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
@@ -25,10 +24,11 @@ const HomeScreen = ({ match }) => {
 		dispatch(
 			listProducts(keyword, {
 				size,
-				colour
+				colour,
+				brand
 			})
 		);
-	}, [dispatch, keyword, size, colour]);
+	}, [dispatch, keyword, size, colour, brand]);
 
 	return (
 		<Row>

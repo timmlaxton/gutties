@@ -5,7 +5,7 @@ import Product from '../models/productModel.js';
 // GET /api/products
 // public
 const getProducts = asyncHandler(async (req, res) => {
-	const { keyword, size, colour } = req.query;
+	const { keyword, size, colour, brand } = req.query;
 	let payload = {};
 
 	if (keyword) {
@@ -26,7 +26,12 @@ const getProducts = asyncHandler(async (req, res) => {
 		};
 	}
 
-	console.log('payload', payload);
+	if (brand) {
+		payload.brand = {
+			$regex: brand,
+			$options: 'i'
+		};
+	}
 
 	const products = await Product.find(payload);
 	console.log({ products });

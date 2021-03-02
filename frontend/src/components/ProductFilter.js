@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useURLQuery } from '../hooks';
 const SIZES = [
 	{
 		label: 'Size 1',
 		value: '1'
+	},
+	{
+		label: 'Size 2',
+		value: '2'
+	},
+	{
+		label: 'Size 3',
+		value: '3'
+	},
+	{
+		label: 'Size 4',
+		value: '4'
+	},
+	{
+		label: 'Size 5',
+		value: '5'
+	},
+	{
+		label: 'Size 6',
+		value: '6'
 	},
 	{
 		label: 'Size 7',
@@ -22,6 +42,14 @@ const SIZES = [
 	{
 		label: 'Size 10',
 		value: '10'
+	},
+	{
+		label: 'Size 11',
+		value: '11'
+	},
+	{
+		label: 'Size 12',
+		value: '12'
 	}
 ];
 
@@ -41,6 +69,37 @@ const COLOURS = [
 	{
 		label: 'Blue',
 		value: 'blue'
+	},
+	{
+		label: 'Red',
+		value: 'red'
+	},
+	{
+		label: 'Brown',
+		value: 'brown'
+	}
+];
+
+const BRANDS = [
+	{
+		label: 'Adidas',
+		value: 'adidas'
+	},
+	{
+		label: 'Nike',
+		value: 'nike'
+	},
+	{
+		label: 'New Balance',
+		value: 'new balance'
+	},
+	{
+		label: 'Converse',
+		value: 'converse'
+	},
+	{
+		label: 'Puma',
+		value: 'puma'
 	}
 ];
 
@@ -51,7 +110,8 @@ const ProductFilter = (props) => {
 
 	const [form, setForm] = useState({
 		size: query.get('size') || '',
-		colour: query.get('colour') || ''
+		colour: query.get('colour') || '',
+		brand: query.get('brand') || ''
 	});
 
 	const onFilterChange = (formKey) => (e) => {
@@ -62,20 +122,18 @@ const ProductFilter = (props) => {
 		};
 		setForm(updatedForm);
 		const { keyword = '' } = params;
-		history.push(`/search/${keyword}?size=${updatedForm.size}&colour=${updatedForm.colour}`);
+		history.push(`/search/${keyword}?size=${updatedForm.size}&colour=${updatedForm.colour}&brand=${updatedForm.brand}`);
 	};
 
-	useEffect(() => {
-		if (!params.keyword) {
-			setForm({
-				size: '',
-				colour: ''
-			});
-			history.replace('/');
-		}
-	}, [params.keyword]);
+	const resetFilters = () => {
+		setForm({
+			size: '',
+			colour: '',
+			brand: ''
+		});
 
-	console.log('props', props);
+		history.replace('/');
+	};
 
 	return (
 		<div>
@@ -109,6 +167,26 @@ const ProductFilter = (props) => {
 							);
 						})}
 					</Form.Control>
+				</Form.Group>
+				<Form.Group>
+					<Form.Label>Brand</Form.Label>
+					<Form.Control as="select" onChange={onFilterChange('brand')} custom>
+						<option value="" selected={form.brand === ''}>
+							Select Brand
+						</option>
+						{BRANDS.map((brand) => {
+							return (
+								<option value={brand.value} key={brand.value} selected={brand.value === form.brand}>
+									{brand.label}
+								</option>
+							);
+						})}
+					</Form.Control>
+				</Form.Group>
+				<Form.Group>
+					<Button variant="link" onClick={resetFilters}>
+						Reset filters
+					</Button>
 				</Form.Group>
 			</Form>
 		</div>
