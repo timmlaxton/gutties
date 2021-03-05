@@ -8,6 +8,31 @@ h3 {
 	padding: 1rem 0;
 }
 
+.title {
+	margin-left: 50%;
+}
+
+.App-header {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+	border: none;
+}
+
+.hero {
+	height: 70%;
+	position: fixed;
+}
+
+.bEfDxO {
+	opacity: 0.2;
+}
+
 .rating span {
 	margin: 0.1rem;
 }
@@ -23,4 +48,13 @@ h3 {
 
 .card-title {
 	position: left;
+}
+
+.zoom {
+	position: absolute;
+	left: 100%;
+	top: 100%;
+	right: 0;
+	bottom: 0;
+	z-index: 10;
 }

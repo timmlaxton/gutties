@@ -5,6 +5,8 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap';
 import Rating from '../components/Rating';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 import { listProductDetails, createProductReview } from '../actions/productActions';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
@@ -50,7 +52,7 @@ const ProductScreen = ({ match, history }) => {
 
 	return (
 		<>
-			<Link className="btn btn-light my-3" to="/">
+			<Link className="btn btn-light my-3" to="/gutties">
 				Go Back
 			</Link>
 			{loading ? (
@@ -60,8 +62,10 @@ const ProductScreen = ({ match, history }) => {
 			) : (
 				<>
 					<Row>
-						<Col md={6}>
-							<Image src={product.image} alt={product.name} fluid />
+						<Col md={3}>
+							<Zoom>
+								<Image src={product.image} alt={product.name} fluid />
+							</Zoom>
 						</Col>
 						<Col md={3}>
 							<ListGroup variant="flush">
@@ -77,7 +81,7 @@ const ProductScreen = ({ match, history }) => {
 							</ListGroup>
 						</Col>
 
-						<Col md={2}>
+						<Col md={3}>
 							<Card>
 								<ListGroup variant="flush">
 									<ListGroup.Item>
@@ -127,6 +131,7 @@ const ProductScreen = ({ match, history }) => {
 								</ListGroup>
 							</Card>
 						</Col>
+						<div className="product-zoom-result-container"></div>
 					</Row>
 					<br />
 					<Row>

@@ -1,58 +1,17 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import Product from '../components/Product';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import { listProducts } from '../actions/productActions';
-import ProductFilter from '../components/ProductFilter';
-import { useURLQuery } from '../hooks';
+import LazyHero from 'react-lazy-hero';
 
-const HomeScreen = ({ match }) => {
-	const keyword = match.params.keyword || '';
-	const query = useURLQuery();
-	const size = query.get('size');
-	const colour = query.get('colour');
-	const brand = query.get('brand');
-	const dispatch = useDispatch();
-
-	const productList = useSelector((state) => state.productList);
-	const { loading, error, products } = productList;
-
-	useEffect(() => {
-		dispatch(
-			listProducts(keyword, {
-				size,
-				colour,
-				brand
-			})
-		);
-	}, [dispatch, keyword, size, colour, brand]);
-
+const HomeScreen = () => {
 	return (
-		<Row>
-			<Col xs={3}>
-				<h2>Filter</h2>
-				<ProductFilter />
-			</Col>
-			<Col xs={9}>
-				<h1>Trainers</h1>
-				{loading ? (
-					<Loader />
-				) : error ? (
-					<Message variant="danger">{error}</Message>
-				) : (
-					<Row>
-						{products.map((product) => (
-							<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-								<Product product={product} />
-							</Col>
-						))}
-					</Row>
-				)}
-			</Col>
-		</Row>
+		<div className="title-container">
+			<LazyHero
+				className="hero"
+				imageSrc="https://images.unsplash.com/photo-1490525535718-60047f3c8a09?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80"
+			></LazyHero>
+
+			<h2 className="title">Gutties: Trainers for kicking about in</h2>
+		</div>
 	);
 };
 

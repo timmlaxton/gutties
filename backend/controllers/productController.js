@@ -9,10 +9,31 @@ const getProducts = asyncHandler(async (req, res) => {
 	let payload = {};
 
 	if (keyword) {
-		payload.name = {
+		payload.$or = [
+			{
+				name: {
+					$regex: keyword,
+					$options: 'i'
+				}
+			},
+			{
+				brand: {
+					$regex: keyword,
+					$options: 'i'
+				}
+			},
+			{
+				category: {
+					$regex: keyword,
+					$options: 'i'
+				}
+			}
+		];
+
+		/*payload.name = {
 			$regex: keyword,
 			$options: 'i'
-		};
+		};*/
 	}
 
 	if (size) {
@@ -32,7 +53,7 @@ const getProducts = asyncHandler(async (req, res) => {
 			$options: 'i'
 		};
 	}
-
+	console.log({ payload });
 	const products = await Product.find(payload);
 	console.log({ products });
 	res.json(products);

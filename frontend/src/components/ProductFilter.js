@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useURLQuery } from '../hooks';
@@ -63,6 +63,10 @@ const COLOURS = [
 		value: 'black'
 	},
 	{
+		label: 'Grey',
+		value: 'grey'
+	},
+	{
 		label: 'Green',
 		value: 'green'
 	},
@@ -77,6 +81,10 @@ const COLOURS = [
 	{
 		label: 'Brown',
 		value: 'brown'
+	},
+	{
+		label: 'Pink',
+		value: 'pink'
 	}
 ];
 
@@ -96,10 +104,6 @@ const BRANDS = [
 	{
 		label: 'Converse',
 		value: 'converse'
-	},
-	{
-		label: 'Puma',
-		value: 'puma'
 	}
 ];
 
@@ -132,7 +136,7 @@ const ProductFilter = (props) => {
 			brand: ''
 		});
 
-		history.replace('/');
+		history.replace('/gutties');
 	};
 
 	return (
